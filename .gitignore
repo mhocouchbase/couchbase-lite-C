@@ -1,10 +1,14 @@
-build_cmake
+# CMake
+/build_cmake/*
+!/build_cmake/scripts
 build
 bin
 *.o
 *.so
 *.dylib
 empty.cpp
+
+# EE Repos
 vendor/couchbase-lite-core-EE
 
 # Editors
@@ -13,7 +17,6 @@ vendor/couchbase-lite-core-EE
 
 # Xcode
 xcuserdata
-
 
 # Python
 python/CouchbaseLite/*.c
