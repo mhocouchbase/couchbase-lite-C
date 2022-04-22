@@ -182,13 +182,24 @@ void CBL_DumpInstances(void) CBLAPI;
 typedef struct CBLDatabase   CBLDatabase;
 /** @} */
 
+/** \defgroup scope  Scope
+     @{ */
+/** A  collection's scope or namespace. */
+typedef struct CBLScope CBLScope;
+
+/** \defgroup collection  Collection
+     @{ */
+/** A collection, a document container. */
+typedef struct CBLCollection    CBLCollection;
+/** @} */
+
 /** \defgroup documents  Documents
      @{ */
 /** An in-memory copy of a document.
     CBLDocument objects can be mutable or immutable. Immutable objects are referenced by _const_
     pointers; mutable ones by _non-const_ pointers. This prevents you from accidentally calling
     a mutable-document function on an immutable document. */
-typedef struct CBLDocument   CBLDocument;
+typedef struct CBLDocument  CBLDocument;
 /** @} */
 
 /** \defgroup blobs Blobs

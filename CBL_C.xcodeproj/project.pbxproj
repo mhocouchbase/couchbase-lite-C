@@ -99,6 +99,10 @@
 		93C70D3426D01B5A0093E927 /* BlobTest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 93C70D3326D01B5A0093E927 /* BlobTest.cc */; };
 		93C70D3526D01B5A0093E927 /* BlobTest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 93C70D3326D01B5A0093E927 /* BlobTest.cc */; };
 		93EC366226C49AF700182B02 /* CBLEncryptable_Internal.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93EC365D26C498AB00182B02 /* CBLEncryptable_Internal.hh */; };
+		FC6ECB3828243DEF00F37F2F /* CBLCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = FC6ECB2A28243DEF00F37F2F /* CBLCollection.h */; };
+		FC6ECB3928243DF500F37F2F /* CBLCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = FC6ECB2A28243DEF00F37F2F /* CBLCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FC6ECB3B2824404400F37F2F /* CBLScope.h in Headers */ = {isa = PBXBuildFile; fileRef = FC6ECB3A2824404400F37F2F /* CBLScope.h */; };
+		FC6ECB3C2824404400F37F2F /* CBLScope.h in Headers */ = {isa = PBXBuildFile; fileRef = FC6ECB3A2824404400F37F2F /* CBLScope.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -382,6 +386,8 @@
 		93D0AFF1262619B800777AFC /* generate_edition_header.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_edition_header.sh; sourceTree = "<group>"; };
 		93E490C326BDE10F0091B587 /* DatabaseTest_Android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DatabaseTest_Android.cc; sourceTree = "<group>"; };
 		93EC365D26C498AB00182B02 /* CBLEncryptable_Internal.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CBLEncryptable_Internal.hh; sourceTree = "<group>"; };
+		FC6ECB2A28243DEF00F37F2F /* CBLCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLCollection.h; sourceTree = "<group>"; };
+		FC6ECB3A2824404400F37F2F /* CBLScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLScope.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -474,6 +480,8 @@
 				27B61DA321D6E40D0027CCDB /* CouchbaseLite.h */,
 				271C2A2D21CAC98F0045856E /* CBLBase.h */,
 				275BC4CC22012D8700DBE7D2 /* CBLBlob.h */,
+				FC6ECB2A28243DEF00F37F2F /* CBLCollection.h */,
+				FC6ECB3A2824404400F37F2F /* CBLScope.h */,
 				271C2A2F21CAC98F0045856E /* CBLDatabase.h */,
 				271C2A2E21CAC98F0045856E /* CBLDocument.h */,
 				93C70CD226C4D3F20093E927 /* CBLEncryptable.h */,
@@ -661,10 +669,12 @@
 				27D11BEF2351043B00C58A70 /* ConflictResolver.hh in Headers */,
 				93C70CE026C4D3F80093E927 /* CBLEncryptable.h in Headers */,
 				271C2A3321CAC98F0045856E /* CBLDocument.h in Headers */,
+				FC6ECB3828243DEF00F37F2F /* CBLCollection.h in Headers */,
 				277B77D3245B44BE00B222D3 /* CBLLog.h in Headers */,
 				27B61D6A21D6B60D0027CCDB /* CBLTest.hh in Headers */,
 				271C2A3521CAC98F0045856E /* CBLQuery.h in Headers */,
 				271C2A3421CAC98F0045856E /* CBLDatabase.h in Headers */,
+				FC6ECB3B2824404400F37F2F /* CBLScope.h in Headers */,
 				271C2A3121CAC98F0045856E /* CBLReplicator.h in Headers */,
 				271C2A3221CAC98F0045856E /* CBLBase.h in Headers */,
 				27886C8D21F64C1400069BEA /* Listener.hh in Headers */,
@@ -682,6 +692,7 @@
 				27984E2B2249A240000FE777 /* CBLBlob.h in Headers */,
 				27984E2D2249A240000FE777 /* CBLDocument.h in Headers */,
 				27984E402249A85E000FE777 /* CouchbaseLite_Umbrella.hh in Headers */,
+				FC6ECB3928243DF500F37F2F /* CBLCollection.h in Headers */,
 				27984E2C2249A240000FE777 /* CBLDatabase.h in Headers */,
 				27984E2E2249A240000FE777 /* CBLQuery.h in Headers */,
 				27984E2F2249A240000FE777 /* CBLReplicator.h in Headers */,
@@ -691,6 +702,7 @@
 				93C70CE126C4D3F90093E927 /* CBLEncryptable.h in Headers */,
 				27984E332249A247000FE777 /* Blob.hh in Headers */,
 				27984E342249A247000FE777 /* Database.hh in Headers */,
+				FC6ECB3C2824404400F37F2F /* CBLScope.h in Headers */,
 				27984E352249A247000FE777 /* Document.hh in Headers */,
 				27DBD0A9246CA667002FD7A7 /* CBLLog.h in Headers */,
 				27984E362249A247000FE777 /* Query.hh in Headers */,

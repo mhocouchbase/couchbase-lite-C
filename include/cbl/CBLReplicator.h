@@ -27,7 +27,7 @@ CBL_CAPI_BEGIN
     another database on a remote server (or on a peer device, or even another local database.)
     @{ */
 
-/** \name  Configuration
+/** \name  Endpoint
     @{ */
 
 /** The name of the HTTP cookie used by Sync Gateway to store session keys. */
@@ -58,6 +58,11 @@ CBLEndpoint* CBLEndpoint_CreateWithLocalDB(CBLDatabase*) CBLAPI;
 /** Frees a CBLEndpoint object. */
 void CBLEndpoint_Free(CBLEndpoint* _cbl_nullable) CBLAPI;
 
+/** @} */
+
+
+/** \name  Authenticator
+    @{ */
 
 /** An opaque object representing authentication credentials for a remote server. */
 typedef struct CBLAuthenticator CBLAuthenticator;
@@ -74,6 +79,10 @@ CBLAuthenticator* CBLAuth_CreateSession(FLString sessionID, FLString cookieName)
 /** Frees a CBLAuthenticator object. */
 void CBLAuth_Free(CBLAuthenticator* _cbl_nullable) CBLAPI;
 
+/** @} */
+
+/** \name  Replicator Configuration
+    @{ */
 
 /** Direction of replication: push, pull, or both. */
 typedef CBL_ENUM(uint8_t, CBLReplicatorType) {
@@ -183,12 +192,30 @@ typedef FLSliceResult (*CBLPropertyDecryptor) (
 
 #endif
 
+typedef struct {
+    CBLCollection* collection;
+    
+    CBLConflictResolver _cbl_nullable conflictResolver; ///< Optional conflict-resolver callback
+    
+    CBLReplicationFilter _cbl_nullable pushFilter;      ///< Optional callback to filter which docs are pushed
+    CBLReplicationFilter _cbl_nullable pullFilter;      ///< Optional callback to validate incoming docs
+    
+    FLArray _cbl_nullable channels;                     ///< Optional set of channels to pull from
+    FLArray _cbl_nullable documentIDs;                  ///< Optional set of document IDs to replicate
+} CBLReplicationCollection;
+
+
 /** The configuration of a replicator. */
 typedef struct {
-    CBLDatabase* database;              ///< The database to replicate
-    CBLEndpoint* endpoint;              ///< The address of the other database to replicate with
-    CBLReplicatorType replicatorType;   ///< Push, pull or both
-    bool continuous;                    ///< Continuous replication?
+    CBLDatabase* database;                  ///< The database to replicate
+    
+    CBLReplicationCollection* collections;  ///< The collections and configurations to replicate
+    size_t collectionCount;                 ///< The number of collections
+    
+    CBLEndpoint* endpoint;                  ///< The address of the other database to replicate with
+    
+    CBLReplicatorType replicatorType;       ///< Push, pull or both
+    bool continuous;                        ///< Continuous replication?
     //-- Auto Purge:
     /**
     If auto purge is active, then the library will automatically purge any documents that the replicating
@@ -228,7 +255,6 @@ typedef struct {
 #endif
 
 } CBLReplicatorConfiguration;
-
 
 /** @} */
 
@@ -304,6 +330,7 @@ typedef struct {
 
 /** A replicator's current status. */
 typedef struct {
+    const CBLCollection* collection;        ///< Collection
     CBLReplicatorActivityLevel activity;    ///< Current state
     CBLReplicatorProgress progress;         ///< Approximate fraction complete
     CBLError error;                         ///< Error, if any
@@ -342,6 +369,20 @@ bool CBLReplicator_IsDocumentPending(CBLReplicator *repl,
                                      CBLError* _cbl_nullable outError) CBLAPI;
 
 
+/** Indicates which documents have local changes that have not yet been pushed to the server
+    by this replicator. This is of course a snapshot, that will go out of date as the replicator
+    makes progress and/or documents are saved locally. */
+FLDict _cbl_nullable CBLReplicator_PendingDocumentIDs2(CBLReplicator*,
+                                                       const CBLCollection* collection,
+                                                       CBLError* _cbl_nullable outError) CBLAPI;
+
+/** Indicates whether the document with the given ID has local changes that have not yet been
+    pushed to the server by this replicator. */
+bool CBLReplicator_IsDocumentPending2(CBLReplicator *repl,
+                                      const CBLCollection* collection,
+                                      FLString docID,
+                                      CBLError* _cbl_nullable outError) CBLAPI;
+
 /** A callback that notifies you when the replicator's status changes.
     @warning  This callback will be called on a background thread managed by the replicator.
                 It must pay attention to thread-safety. It should not take a long time to return,
@@ -362,9 +403,10 @@ CBLListenerToken* CBLReplicator_AddChangeListener(CBLReplicator*,
 
 /** Information about a document that's been pushed or pulled. */
 typedef struct {
-    FLString ID;                ///< The document ID
-    CBLDocumentFlags flags;     ///< Indicates whether the document was deleted or removed
-    CBLError error;             ///< If the code is nonzero, the document failed to replicate.
+    FLString ID;                            ///< The document ID
+    CBLDocumentFlags flags;                 ///< Indicates whether the document was deleted or removed
+    CBLError error;                         ///< If the code is nonzero, the document failed to replicate.
+    const CBLCollection* collection;        ///< Collection
 } CBLReplicatedDocument;
 
 /** A callback that notifies you when documents are replicated.
